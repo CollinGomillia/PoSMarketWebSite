@@ -5,8 +5,176 @@
 }
 
 body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+  'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans',
+  'Helvetica Neue', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.app-container {
+  min-height: 100vh;
   background-color: #f3f4f6;
 }
 
-.top
+/* Header */
+.header {
+  background-color: #b91c1c;
+  color: white;
+  padding: 1rem;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+.header-content {
+  max-width: 1280px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header h1 {
+  font-size: 1.875rem;
+  font-weight: bold;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+.header-time {
+  font-size: 1.125rem;
+  font-weight: 600;
+}
+
+.header-user {
+  font-size: 1.125rem;
+}
+
+.header-user span {
+  font-weight: bold;
+}
+
+.logout-btn {
+  background-color: #7f1d1d;
+  color: white;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 0.375rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.logout-btn:hover {
+  background-color: #5f0f0f;
+}
+
+/* Main Container */
+.main-wrapper {
+  display: flex;
+}
+
+/* Sidebar */
+.sidebar {
+  width: 192px;
+  background-color: white;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  padding: 1.5rem;
+}
+
+.sidebar nav {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.sidebar-link {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  color: #374151;
+  font-weight: 600;
+  text-decoration: none;
+  transition: color 0.3s;
+  cursor: pointer;
+}
+
+.sidebar-link:hover {
+  color: #dc2626;
+}
+
+.sidebar-icon {
+  font-size: 1.25rem;
+}
+
+.sidebar hr {
+  margin: 1rem 0;
+  border: none;
+  border-top: 1px solid #e5e7eb;
+}
+
+.sidebar-logout {
+  width: 100%;
+  text-align: left;
+  color: #008000;
+  font-weight: 600;
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: color 0.3s;
+}
+
+.sidebar-logout:hover {
+  color: #991b1b;
+}
+
+/* Main Content */
+.main-content {
+  flex: 1;
+  padding: 2rem;
+}
+
+.dashboard-title {
+  font-size: 1.875rem;
+  font-weight: bold;
+  color: #1f2937;
+  margin-bottom: 2rem;
+}
+
+/* Dashboard Grid */
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+}
+
+.action-card {
+  background-color: white;
+  border: 2px solid #d1d5db;
+  border-radius: 0.5rem;
+  padding: 2rem;
+  text-align: center;
+  text-decoration: none;
+  color: inherit;
+  transition: all 0.3s;
+  cursor: pointer;
+}
+
+.action-card:hover {
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  border-color: #dc2626;
+}
+
+.action-card-icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.action-card-label {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #1f2937;
+}

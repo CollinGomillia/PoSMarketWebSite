@@ -5,6 +5,7 @@ export default function FillFloorPage() {
             <div className="bg-white rounded-lg shadow-lg p-6">
                 <p className="text-gray-600">Floor stocking tasks and assignments</p>
                 {/* Add floor filling tasks here later */}
+
             </div>
         </div>
     );
