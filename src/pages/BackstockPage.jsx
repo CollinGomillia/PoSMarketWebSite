@@ -9,9 +9,7 @@ export default function BackstockPage() {
     const [formData, setFormData] = useState({
         name: '',
         quantity: '',
-        sku: '',
-        location: '',
-        reorderLevel: ''
+        location: ''
     });
 
     // Handle form input changes
@@ -27,7 +25,7 @@ export default function BackstockPage() {
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        if (!formData.name || !formData.quantity || !formData.sku) {
+        if (!formData.name || !formData.quantity) {
             alert('Please fill in all required fields');
             return;
         }
@@ -36,7 +34,7 @@ export default function BackstockPage() {
             // Update existing item
             setItems(items.map(item =>
                 item.id === editingId
-                    ? { ...item, ...formData, quantity: parseInt(formData.quantity), reorderLevel: parseInt(formData.reorderLevel) || 0 }
+                    ? { ...item, ...formData, quantity: parseInt(formData.quantity) }
                     : item
             ));
             setEditingId(null);
@@ -46,14 +44,13 @@ export default function BackstockPage() {
                 id: Date.now(),
                 ...formData,
                 quantity: parseInt(formData.quantity),
-                reorderLevel: parseInt(formData.reorderLevel) || 0,
                 dateAdded: new Date().toLocaleDateString()
             };
             setItems([...items, newItem]);
         }
 
-        // Reset form
-        setFormData({ name: '', quantity: '', sku: '', location: '', reorderLevel: '' });
+        // Reset the form
+        setFormData({ name: '', quantity: '', location: '' });
         setShowForm(false);
     };
 
@@ -69,9 +66,7 @@ export default function BackstockPage() {
         setFormData({
             name: item.name,
             quantity: item.quantity.toString(),
-            sku: item.sku,
-            location: item.location,
-            reorderLevel: item.reorderLevel.toString()
+            location: item.location
         });
         setEditingId(item.id);
         setShowForm(true);
@@ -81,18 +76,14 @@ export default function BackstockPage() {
     const handleCancel = () => {
         setShowForm(false);
         setEditingId(null);
-        setFormData({ name: '', quantity: '', sku: '', location: '', reorderLevel: '' });
+        setFormData({ name: '', quantity: '', location: '' });
     };
 
     // Filter items based on search
     const filteredItems = items.filter(item =>
         item.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        item.sku.toLowerCase().includes(searchTerm.toLowerCase()) ||
         item.location.toLowerCase().includes(searchTerm.toLowerCase())
     );
-
-    // Check for low stock items
-    const lowStockItems = filteredItems.filter(item => item.quantity <= item.reorderLevel && item.reorderLevel > 0);
 
     return (
         <div>
@@ -118,7 +109,7 @@ export default function BackstockPage() {
                             {editingId ? 'Edit Item' : 'Add New Item'}
                         </h3>
                         <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <div>
+                            <div> {/*Request item name, is required */}
                                 <label className="block text-sm font-medium text-gray-700 mb-1">
                                     Item Name
                                 </label>
@@ -127,13 +118,12 @@ export default function BackstockPage() {
                                     name="name"
                                     value={formData.name}
                                     onChange={handleInputChange}
-                                    placeholder="e.g., Milk"
+                                    placeholder="example, Milk"
                                     className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
                                 />
                             </div>
 
-
-                            <div>
+                            <div> {/*Request quantity, is required */}
                                 <label className="block text-sm font-medium text-gray-700 mb-1">
                                     Quantity
                                 </label>
@@ -147,8 +137,8 @@ export default function BackstockPage() {
                                     className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
                                 />
                             </div>
-
-                            <div>
+                            {/*Items location, for now we have the three */}
+                            <div className="md:col-span-2">
                                 <label className="block text-sm font-medium text-gray-700 mb-1">
                                     Location
                                 </label>
@@ -157,7 +147,7 @@ export default function BackstockPage() {
                                     name="location"
                                     value={formData.location}
                                     onChange={handleInputChange}
-                                    placeholder="e.g., Dairy/Frozen/Grocery"
+                                    placeholder="example., Dairy/Frozen/Grocery"
                                     className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
                                 />
                             </div>
@@ -181,13 +171,13 @@ export default function BackstockPage() {
                     </div>
                 )}
 
-                {/* Search Bar */}
+                {/* Search Bar, will need to fix but you can search up items you have backstocked */}
                 <div className="mb-6">
                     <div className="flex items-center bg-gray-100 rounded-lg px-4 py-2">
                         <Search size={20} className="text-gray-500 mr-2" />
                         <input
                             type="text"
-                            placeholder="Search by name, SKU, or location..."
+                            placeholder="Search by name or location..."
                             value={searchTerm}
                             onChange={(e) => setSearchTerm(e.target.value)}
                             className="flex-1 bg-transparent outline-none text-gray-700"
@@ -195,20 +185,11 @@ export default function BackstockPage() {
                     </div>
                 </div>
 
-                {/* Low Stock Alert */}
-                {lowStockItems.length > 0 && (
-                    <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4 mb-6">
-                        <p className="text-yellow-800 font-medium">
-                            ⚠️ {lowStockItems.length} item(s) below reorder level
-                        </p>
-                    </div>
-                )}
-
                 {/* Items Table */}
                 {items.length === 0 ? (
                     <div className="text-center py-8 text-gray-500">
                         <p className="mb-2">No items in backstock yet</p>
-                        <p className="text-sm">Click "Add Item" to get started</p>
+                        <p className="text-sm">Click "Backstock Item"</p>
                     </div>
                 ) : filteredItems.length === 0 ? (
                     <div className="text-center py-8 text-gray-500">
@@ -220,42 +201,19 @@ export default function BackstockPage() {
                             <thead>
                             <tr className="border-b-2 border-gray-300 bg-gray-50">
                                 <th className="text-left px-4 py-3 font-semibold">Item Name</th>
-                                <th className="text-left px-4 py-3 font-semibold">SKU</th>
                                 <th className="text-center px-4 py-3 font-semibold">Quantity</th>
                                 <th className="text-left px-4 py-3 font-semibold">Location</th>
-                                <th className="text-center px-4 py-3 font-semibold">Reorder Level</th>
-                                <th className="text-center px-4 py-3 font-semibold">Status</th>
                                 <th className="text-center px-4 py-3 font-semibold">Actions</th>
                             </tr>
                             </thead>
                             <tbody>
                             {filteredItems.map((item) => (
-                                <tr
-                                    key={item.id}
-                                    className={`border-b border-gray-200 hover:bg-gray-50 ${
-                                        item.quantity <= item.reorderLevel && item.reorderLevel > 0
-                                            ? 'bg-yellow-50'
-                                            : ''
-                                    }`}
-                                >
+                                <tr key={item.id} className="border-b border-gray-200 hover:bg-gray-50">
                                     <td className="px-4 py-3 font-medium text-gray-900">{item.name}</td>
-                                    <td className="px-4 py-3 text-gray-700">{item.sku}</td>
                                     <td className="px-4 py-3 text-center font-semibold text-gray-900">
                                         {item.quantity}
                                     </td>
                                     <td className="px-4 py-3 text-gray-700">{item.location}</td>
-                                    <td className="px-4 py-3 text-center text-gray-700">{item.reorderLevel}</td>
-                                    <td className="px-4 py-3 text-center">
-                                        {item.quantity <= item.reorderLevel && item.reorderLevel > 0 ? (
-                                            <span className="bg-yellow-200 text-yellow-800 px-3 py-1 rounded-full text-xs font-semibold">
-                                                    Low Stock
-                                                </span>
-                                        ) : (
-                                            <span className="bg-green-200 text-green-800 px-3 py-1 rounded-full text-xs font-semibold">
-                                                    Ok
-                                                </span>
-                                        )}
-                                    </td>
                                     <td className="px-4 py-3 text-center">
                                         <div className="flex justify-center gap-2">
                                             <button
@@ -281,9 +239,9 @@ export default function BackstockPage() {
                     </div>
                 )}
 
-                {/* Summary Stats */}
+                {/* Backroom Stats */}
                 {items.length > 0 && (
-                    <div className="mt-6 pt-6 border-t border-gray-200 grid grid-cols-3 gap-4 text-center">
+                    <div className="mt-6 pt-6 border-t border-gray-200 grid grid-cols-2 gap-4 text-center">
                         <div>
                             <p className="text-gray-600 text-sm">Total Items</p>
                             <p className="text-2xl font-bold text-gray-900">{filteredItems.length}</p>
@@ -294,13 +252,10 @@ export default function BackstockPage() {
                                 {filteredItems.reduce((sum, item) => sum + item.quantity, 0)}
                             </p>
                         </div>
-                        <div>
-                            <p className="text-gray-600 text-sm">Low Stock Items</p>
-                            <p className="text-2xl font-bold text-yellow-600">{lowStockItems.length}</p>
-                        </div>
                     </div>
                 )}
             </div>
         </div>
     );
 }
+

@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useSales } from '../context/SalesContext.jsx';
 import { Trash2, Plus } from 'lucide-react';
+//This was made for the purpose of manually adding in items just to see if the daily progress percentage worked, I will be moving this into a transaction page of it's own later
 
 export default function SalesForm() {
     const { products, currentCart, addToCart, removeFromCart, completeSale } =
@@ -22,6 +23,7 @@ export default function SalesForm() {
         (sum, item) => sum + item.price * item.quantity,
         0
     );
+
 
     return (
         <div className="flex gap-6 bg-white rounded-lg shadow-lg p-6">
@@ -74,7 +76,7 @@ export default function SalesForm() {
                 </div>
             </div>
 
-            {/* Cart Panel */}
+            {/* Just heading for Shopping Cart, updates with user input*/}
             <div className="flex-1 border-l pl-6">
                 <h2 className="text-2xl font-bold mb-6">Shopping Cart</h2>
 
@@ -109,6 +111,8 @@ export default function SalesForm() {
                     </div>
                 )}
 
+
+
                 <div className="border-t pt-4">
                     <div className="flex justify-between items-center text-xl font-bold mb-4">
                         <span>Total:</span>
@@ -116,7 +120,7 @@ export default function SalesForm() {
                     </div>
 
                     <div>
-                        <label className="block text-sm font-semibold mb-2">
+                        <label className="block text-sm font-semibold mb-2"> {/*This is for payment methods, it's just a drop down menu for now, I haven't categorized yet */}
                             Payment Method
                         </label>
                         <select

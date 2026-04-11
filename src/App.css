@@ -77,7 +77,7 @@ body {
   display: flex;
 }
 
-/* Sidebar */
+/* Sidebar navs*/
 .sidebar {
   width: 192px;
   background-color: white;
@@ -131,7 +131,7 @@ body {
   color: #991b1b;
 }
 
-/* Main Content */
+/* Main page*/
 .main-content {
   flex: 1;
   padding: 2rem;

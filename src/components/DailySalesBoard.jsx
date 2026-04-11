@@ -11,6 +11,7 @@ export default function DailySalesBoard() {
 
     const progress = (todaySales / dailyGoal) * 100;
 
+    //This is all for display purposes, within this function we are returning the sales, which will then be calculated and displayed by the daily goal
     return (
         <div className="bg-gradient-to-br from-blue-50 to-indigo-100 rounded-lg p-6 shadow-lg">
             <h2 className="text-3xl font-bold mb-6 text-gray-800">
@@ -39,6 +40,8 @@ export default function DailySalesBoard() {
                     </p>
                 </div>
             </div>
+
+
 
             <div className="bg-white p-6 rounded-lg shadow">
                 <div className="flex justify-between items-center mb-3">

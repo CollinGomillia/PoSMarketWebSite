@@ -5,8 +5,12 @@ import InventoryPage from './pages/InventoryPage';
 import BackstockPage from './pages/BackstockPage';
 import IncomingInventoryPage from './pages/IncomingInventoryPage';
 import FillFloorPage from './pages/FillFloorPage';
+import InvoicesPage from './pages/InvoicesPage';
+import UsersPage from './pages/UserPage';
 import './app.css';
 
+//This is the main page to the app, all links through dashboard and sidenavbar links, this is ideally what you want to see with a PoS system
+//Need to add some more functionalities later, and links to completed pages
 export default function App() {
     return (
         <SalesProvider>
@@ -33,24 +37,27 @@ export default function App() {
 
                     <div className="main-wrapper">
                         {/* Sidebar, emoticons taken from online, will be for tasks, non-financial */}
+                        {/*Some of these may not be completed yet, including mark out items and incoming inventory/trailers */}
                         <aside className="sidebar">
                             <nav>
                                 <SidebarLink icon="📊" label="Dashboard" to="/" />
-                                <SidebarLink icon="🫙" label="Inventory" to="/products" />
-                                <SidebarLink icon="🚚" label="Incoming Inventory" to="/suppliers" />
-                                <SidebarLink icon="❌" label="Mark Out Items" to="/basket" />
-                                <SidebarLink icon="🛒" label = "Fill The Floor" to= "/fillfloorpage" />
+                                <SidebarLink icon="🫙" label="Inventory" to="/inventory" />
+                                <SidebarLink icon="🚚" label="Incoming Inventory" to="/incoming" />
+                                <SidebarLink icon="❌" label="Mark Out Items" to="/mark-out" />
+                                <SidebarLink icon="🛒" label = "Fill The Floor" to= "/fill-floor" />
                                 <SidebarLink icon="🫳" label = "Backstock Items" to="/backstockitems" />
                                 <hr />
                                 <button className="sidebar-logout"> Switch User</button>
                             </nav>
                         </aside>
 
-                        {/* Main Content */}
+                        {/* Main content on the dashboard*/}
                         <main className="main-content">
                             <Routes>
                                 <Route path="/" element={<Dashboard />} />
                                 <Route path="/sales" element={<SalesPage />} />
+                                <Route path="/invoices" element={<InvoicesPage />} />
+                                <Route path="/users" element={<UsersPage />} />
                                 <Route path="/inventory" element={<InventoryPage />} />
                                 <Route path="/backstockitems" element={<BackstockPage />} />
                                 <Route path="/incoming" element={<IncomingInventoryPage />} />
